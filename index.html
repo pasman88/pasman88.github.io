@@ -103,7 +103,6 @@
     .hero-card,
     .panel,
     .timeline-item,
-    .project-card,
     .contact-card,
     .about-card {
       background: var(--card);
@@ -354,62 +353,6 @@
       margin: 0;
     }
 
-    .projects {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 18px;
-    }
-
-    .project-card {
-      padding: 22px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .project-tag {
-      display: inline-block;
-      width: fit-content;
-      padding: 7px 10px;
-      border-radius: 999px;
-      background: rgba(255, 111, 97, 0.1);
-      color: var(--primary);
-      font-size: 0.8rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.4px;
-    }
-
-    .project-card h3 {
-      margin: 0;
-      font-size: 1.15rem;
-      line-height: 1.4;
-    }
-
-    .project-card p {
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.7;
-      flex-grow: 1;
-    }
-
-    .project-links {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-top: 8px;
-    }
-
-    .project-links a {
-      text-decoration: none;
-      font-weight: 700;
-      color: var(--secondary);
-    }
-
-    .project-links a:hover {
-      color: var(--primary);
-    }
-
     .contact-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -451,7 +394,6 @@
     @media (max-width: 1024px) {
       .hero,
       .about-grid,
-      .projects,
       .contact-grid {
         grid-template-columns: 1fr;
       }
@@ -496,7 +438,6 @@
       .panel,
       .about-card,
       .timeline-item,
-      .project-card,
       .contact-card {
         padding: 18px;
       }
@@ -514,7 +455,6 @@
       <div class="nav-links">
         <a href="#about">Chi sono</a>
         <a href="#experience">Esperienza</a>
-        <a href="#projects">Progetti</a>
         <a href="#contact">Contatti</a>
       </div>
     </div>
@@ -535,8 +475,8 @@
         </div>
 
         <div class="cta-row">
-          <a class="btn btn-primary" href="#projects">Vedi i progetti</a>
-          <a class="btn btn-secondary" href="#contact">Contattami</a>
+          <a class="btn btn-primary" href="#contact">Contattami</a>
+          <a class="btn btn-secondary" href="#about">Scopri di più</a>
         </div>
 
         <div class="stats">
@@ -558,7 +498,7 @@
         </div>
         <div class="panel">
           <p class="mini-title">Obiettivo del sito</p>
-          <p class="big-text">Raccogliere profilo professionale, progetti, mini-tool e contatti in una sola pagina chiara e professionale.</p>
+          <p class="big-text">Raccogliere profilo professionale, competenze ed esperienze in una sola pagina chiara e professionale.</p>
         </div>
       </div>
     </section>
@@ -640,53 +580,6 @@
       </div>
     </section>
 
-    <section id="projects">
-      <div class="section-head">
-        <div>
-          <h2>Progetti</h2>
-          <p>Qui puoi mostrare lavori reali, demo pubbliche, tool utili o repository che vuoi mettere in evidenza.</p>
-        </div>
-      </div>
-
-      <div class="projects">
-        <article class="project-card">
-          <span class="project-tag">Tool</span>
-          <h3>Calcolatori finanziari</h3>
-          <p>
-            Una raccolta di mini strumenti web per simulazioni PAC, rendimento atteso, obiettivi di risparmio e pianificazione finanziaria.
-          </p>
-          <div class="project-links">
-            <a href="#">Demo</a>
-            <a href="#">Codice</a>
-          </div>
-        </article>
-
-        <article class="project-card">
-          <span class="project-tag">Data</span>
-          <h3>Dashboard e controlli di qualità</h3>
-          <p>
-            Esempi di analisi e controlli su flussi dati con attenzione alla coerenza tra sorgenti, stock e reportistica finale.
-          </p>
-          <div class="project-links">
-            <a href="#">Dettagli</a>
-            <a href="#">Repository</a>
-          </div>
-        </article>
-
-        <article class="project-card">
-          <span class="project-tag">Learning</span>
-          <h3>Appunti tecnici e mini-guide</h3>
-          <p>
-            Una sezione dedicata a guide pratiche su SAS, SQL, Databricks, GitHub e workflow utili per il lavoro quotidiano.
-          </p>
-          <div class="project-links">
-            <a href="#">Leggi</a>
-            <a href="#">Materiale</a>
-          </div>
-        </article>
-      </div>
-    </section>
-
     <section id="contact">
       <div class="section-head">
         <div>
@@ -699,7 +592,7 @@
         <div class="contact-card">
           <div class="contact-label">LinkedIn</div>
           <div class="contact-value">
-            <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer">linkedin.com/in/tuo-profilo</a>
+            <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer">https://www.linkedin.com/in/pasqualemangiafave/</a>
           </div>
         </div>
         <div class="contact-card">
@@ -711,7 +604,7 @@
         <div class="contact-card">
           <div class="contact-label">Email</div>
           <div class="contact-value">
-            <a href="mailto:tuamail@example.com">tuamail@example.com</a>
+            <a href="mailto:pasqualemangiafave@gmail.com">pasqualemangiafave@gmail.com</a>
           </div>
         </div>
       </div>
