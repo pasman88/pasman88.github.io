@@ -7,35 +7,41 @@
   <style>
     :root {
       --bg: #f5efe6;
-      --card: rgba(255,255,255,0.9);
+      --card: rgba(255, 255, 255, 0.92);
       --card-strong: #ffffff;
       --text: #1f2937;
       --muted: #6b7280;
       --primary: #ff6f61;
       --primary-hover: #e65c50;
       --secondary: #4f46e5;
-      --border: rgba(17,24,39,0.08);
-      --shadow: 0 12px 35px rgba(17,24,39,0.08);
+      --border: rgba(17, 24, 39, 0.08);
+      --shadow: 0 12px 35px rgba(17, 24, 39, 0.08);
       --radius: 22px;
       --max: 1180px;
     }
 
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
-    html { scroll-behavior: smooth; }
+    html {
+      scroll-behavior: smooth;
+    }
 
     body {
       margin: 0;
       font-family: "Segoe UI", Arial, sans-serif;
       color: var(--text);
       background:
-        radial-gradient(circle at top left, rgba(255,111,97,0.14), transparent 24%),
-        radial-gradient(circle at top right, rgba(79,70,229,0.12), transparent 20%),
+        radial-gradient(circle at top left, rgba(255, 111, 97, 0.14), transparent 24%),
+        radial-gradient(circle at top right, rgba(79, 70, 229, 0.12), transparent 20%),
         linear-gradient(135deg, #f3e4cc, #f8f3eb);
       min-height: 100vh;
     }
 
-    a { color: inherit; }
+    a {
+      color: inherit;
+    }
 
     .container {
       max-width: var(--max);
@@ -48,8 +54,8 @@
       top: 0;
       z-index: 10;
       backdrop-filter: blur(12px);
-      background: rgba(255,255,255,0.72);
-      border-bottom: 1px solid rgba(17,24,39,0.06);
+      background: rgba(255, 255, 255, 0.75);
+      border-bottom: 1px solid rgba(17, 24, 39, 0.06);
     }
 
     .nav-inner {
@@ -66,6 +72,7 @@
       font-weight: 800;
       text-decoration: none;
       letter-spacing: 0.2px;
+      font-size: 1.05rem;
     }
 
     .nav-links {
@@ -78,19 +85,27 @@
       text-decoration: none;
       color: var(--muted);
       font-weight: 600;
+      transition: color 0.2s ease;
     }
 
-    .nav-links a:hover { color: var(--primary); }
+    .nav-links a:hover {
+      color: var(--primary);
+    }
 
     .hero {
       padding-top: 36px;
       display: grid;
-      grid-template-columns: 1.25fr 0.9fr;
+      grid-template-columns: minmax(0, 1.25fr) minmax(320px, 0.9fr);
       gap: 26px;
       align-items: stretch;
     }
 
-    .hero-card, .panel, .timeline-item, .project-card, .contact-card {
+    .hero-card,
+    .panel,
+    .timeline-item,
+    .project-card,
+    .contact-card,
+    .about-card {
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: var(--radius);
@@ -107,32 +122,42 @@
       gap: 8px;
       padding: 8px 14px;
       border-radius: 999px;
-      background: rgba(79,70,229,0.08);
+      background: rgba(79, 70, 229, 0.08);
       color: var(--secondary);
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 0.5px;
-      margin-bottom: 16px;
+      margin-bottom: 18px;
     }
 
     h1 {
-      margin: 0 0 12px;
-      font-size: clamp(2.3rem, 5vw, 4.1rem);
-      line-height: 1.04;
+      margin: 0 0 14px;
+      font-size: clamp(2rem, 4vw, 3.25rem);
+      line-height: 1.12;
+      max-width: 11ch;
     }
 
     .hero p {
       color: var(--muted);
-      line-height: 1.7;
-      font-size: 1.04rem;
+      line-height: 1.75;
+      font-size: 1.02rem;
+      max-width: 64ch;
+      margin: 0;
+    }
+
+    .hero-tech {
+      margin-top: 16px;
+      color: #374151;
+      font-weight: 700;
+      line-height: 1.6;
     }
 
     .cta-row {
       display: flex;
       gap: 14px;
       flex-wrap: wrap;
-      margin-top: 22px;
+      margin-top: 24px;
     }
 
     .btn {
@@ -145,19 +170,27 @@
       border: 1px solid transparent;
     }
 
-    .btn:hover { transform: translateY(-1px); }
+    .btn:hover {
+      transform: translateY(-1px);
+    }
 
     .btn-primary {
       background: var(--primary);
       color: #fff;
     }
 
-    .btn-primary:hover { background: var(--primary-hover); }
+    .btn-primary:hover {
+      background: var(--primary-hover);
+    }
 
     .btn-secondary {
       background: #fff;
       border-color: var(--border);
       color: var(--text);
+    }
+
+    .btn-secondary:hover {
+      border-color: rgba(17, 24, 39, 0.16);
     }
 
     .hero-side {
@@ -168,28 +201,35 @@
     .panel {
       padding: 24px;
       background: var(--card-strong);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 170px;
     }
 
     .mini-title {
       margin: 0 0 10px;
-      font-size: 1rem;
+      font-size: 0.92rem;
       color: var(--muted);
       text-transform: uppercase;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.6px;
+      font-weight: 700;
     }
 
     .big-text {
       margin: 0;
-      font-size: 1.55rem;
+      font-size: 1.2rem;
       font-weight: 800;
-      line-height: 1.3;
+      line-height: 1.5;
+      color: #374151;
+      max-width: 30ch;
     }
 
     .stats {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0,1fr));
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 14px;
-      margin-top: 18px;
+      margin-top: 22px;
     }
 
     .stat {
@@ -200,19 +240,20 @@
     }
 
     .stat-value {
-      font-size: 1.5rem;
+      font-size: 1.15rem;
       font-weight: 800;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
+      line-height: 1.35;
     }
 
     .stat-label {
       color: var(--muted);
-      line-height: 1.5;
+      line-height: 1.6;
       font-size: 0.92rem;
     }
 
     section {
-      padding-top: 28px;
+      padding-top: 30px;
     }
 
     .section-head {
@@ -224,7 +265,7 @@
     }
 
     .section-head h2 {
-      margin: 0;
+      margin: 0 0 6px;
       font-size: 1.9rem;
     }
 
@@ -232,7 +273,7 @@
       margin: 0;
       color: var(--muted);
       max-width: 700px;
-      line-height: 1.6;
+      line-height: 1.65;
     }
 
     .about-grid {
@@ -242,11 +283,19 @@
     }
 
     .about-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
       padding: 24px;
-      box-shadow: var(--shadow);
+    }
+
+    .about-card h3 {
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 1.15rem;
+    }
+
+    .about-card p {
+      color: var(--muted);
+      line-height: 1.7;
+      margin: 0 0 14px;
     }
 
     .chips {
@@ -291,6 +340,7 @@
     .timeline-company {
       color: var(--secondary);
       font-weight: 700;
+      margin-top: 4px;
     }
 
     .timeline-date {
@@ -300,13 +350,13 @@
 
     .timeline-item p {
       color: var(--muted);
-      line-height: 1.65;
+      line-height: 1.7;
       margin: 0;
     }
 
     .projects {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0,1fr));
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 18px;
     }
 
@@ -322,7 +372,7 @@
       width: fit-content;
       padding: 7px 10px;
       border-radius: 999px;
-      background: rgba(255,111,97,0.1);
+      background: rgba(255, 111, 97, 0.1);
       color: var(--primary);
       font-size: 0.8rem;
       font-weight: 800;
@@ -333,12 +383,13 @@
     .project-card h3 {
       margin: 0;
       font-size: 1.15rem;
+      line-height: 1.4;
     }
 
     .project-card p {
       margin: 0;
       color: var(--muted);
-      line-height: 1.65;
+      line-height: 1.7;
       flex-grow: 1;
     }
 
@@ -346,7 +397,7 @@
       display: flex;
       gap: 12px;
       flex-wrap: wrap;
-      margin-top: 6px;
+      margin-top: 8px;
     }
 
     .project-links a {
@@ -355,9 +406,13 @@
       color: var(--secondary);
     }
 
+    .project-links a:hover {
+      color: var(--primary);
+    }
+
     .contact-grid {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0,1fr));
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 18px;
     }
 
@@ -373,8 +428,18 @@
 
     .contact-value {
       font-weight: 800;
-      font-size: 1.08rem;
+      font-size: 1.02rem;
       word-break: break-word;
+      line-height: 1.5;
+    }
+
+    .contact-value a {
+      text-decoration: none;
+      color: var(--secondary);
+    }
+
+    .contact-value a:hover {
+      color: var(--primary);
     }
 
     footer {
@@ -384,16 +449,61 @@
     }
 
     @media (max-width: 1024px) {
-      .hero, .about-grid, .projects, .contact-grid {
+      .hero,
+      .about-grid,
+      .projects,
+      .contact-grid {
         grid-template-columns: 1fr;
+      }
+
+      .hero-card h1 {
+        max-width: 100%;
+      }
+
+      .big-text {
+        max-width: 100%;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .nav-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .nav-links {
+        gap: 12px;
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .section-head {
+        align-items: start;
+        flex-direction: column;
       }
     }
 
     @media (max-width: 640px) {
-      .container, .nav-inner { padding-left: 14px; padding-right: 14px; }
-      .hero-card, .panel, .about-card, .timeline-item, .project-card, .contact-card { padding: 18px; }
-      .stats { grid-template-columns: 1fr; }
-      .section-head { align-items: start; flex-direction: column; }
+      .container,
+      .nav-inner {
+        padding-left: 14px;
+        padding-right: 14px;
+      }
+
+      .hero-card,
+      .panel,
+      .about-card,
+      .timeline-item,
+      .project-card,
+      .contact-card {
+        padding: 18px;
+      }
+
+      h1 {
+        font-size: clamp(1.8rem, 8vw, 2.4rem);
+      }
     }
   </style>
 </head>
@@ -414,23 +524,29 @@
     <section class="hero" id="home">
       <div class="hero-card">
         <div class="badge">Data Analyst · Data Engineer</div>
-        <h1>Ciao, sono Pasquale.<br />Trasformo dati in processi, controlli e strumenti utili.</h1>
+        <h1>Ciao, sono Pasquale. Trasformo dati in processi, controlli e strumenti utili.</h1>
         <p>
           Lavoro tra analisi dati, quadrature, data quality e automazione di flussi in ambito bancario e assicurativo.
           Mi occupo di SAS, SQL, Oracle, Databricks e reporting, con attenzione alla coerenza del dato e alla leggibilità delle soluzioni.
         </p>
+
+        <div class="hero-tech">
+          SAS · SQL · Oracle · Azure Databricks · Python · Power BI
+        </div>
+
         <div class="cta-row">
           <a class="btn btn-primary" href="#projects">Vedi i progetti</a>
           <a class="btn btn-secondary" href="#contact">Contattami</a>
         </div>
+
         <div class="stats">
           <div class="stat">
-            <div class="stat-value">SAS · SQL · Databricks</div>
-            <div class="stat-label">Tecnologie su cui costruisco analisi, controlli e pipeline.</div>
+            <div class="stat-value">Analisi, controlli e pipeline</div>
+            <div class="stat-label">Costruisco soluzioni orientate alla qualità del dato, alla quadratura e alla leggibilità dei processi.</div>
           </div>
           <div class="stat">
             <div class="stat-value">Bancario / Assicurativo</div>
-            <div class="stat-label">Contesti in cui ho lavorato su data quality e reportistica.</div>
+            <div class="stat-label">Esperienza in contesti dove coerenza, affidabilità e riconciliazione dei dati contano davvero.</div>
           </div>
         </div>
       </div>
@@ -442,7 +558,7 @@
         </div>
         <div class="panel">
           <p class="mini-title">Obiettivo del sito</p>
-          <p class="big-text">Raccogliere profilo professionale, progetti, mini-tool e contatti in una sola pagina chiara.</p>
+          <p class="big-text">Raccogliere profilo professionale, progetti, mini-tool e contatti in una sola pagina chiara e professionale.</p>
         </div>
       </div>
     </section>
@@ -575,22 +691,28 @@
       <div class="section-head">
         <div>
           <h2>Contatti</h2>
-          <p>Qui puoi inserire i tuoi collegamenti professionali. Sostituisci i placeholder con i link reali.</p>
+          <p>Inserisci qui i tuoi collegamenti professionali reali.</p>
         </div>
       </div>
 
       <div class="contact-grid">
         <div class="contact-card">
           <div class="contact-label">LinkedIn</div>
-          <div class="contact-value">https://www.linkedin.com/in/pasqualemangiafave/</div>
+          <div class="contact-value">
+            <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer">linkedin.com/in/tuo-profilo</a>
+          </div>
         </div>
         <div class="contact-card">
           <div class="contact-label">GitHub</div>
-          <div class="contact-value">github.com/pasman88</div>
+          <div class="contact-value">
+            <a href="https://github.com/pasman88" target="_blank" rel="noopener noreferrer">github.com/pasman88</a>
+          </div>
         </div>
         <div class="contact-card">
           <div class="contact-label">Email</div>
-          <div class="contact-value">pasqualemangiafave@gmail.com</div>
+          <div class="contact-value">
+            <a href="mailto:tuamail@example.com">tuamail@example.com</a>
+          </div>
         </div>
       </div>
     </section>
