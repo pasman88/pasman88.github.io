@@ -1,196 +1,602 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pasman88 - Calcolatori finanziari</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pasquale Mangiafave | Portfolio</title>
   <style>
     :root {
+      --bg: #f5efe6;
+      --card: rgba(255,255,255,0.9);
+      --card-strong: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
       --primary: #ff6f61;
       --primary-hover: #e65c50;
-      --bg: #f5f5f5;
-      --card-bg: #ffffff;
-      --text: #222;
-      --muted: #666;
-      --shadow: 0 4px 16px rgba(0,0,0,0.08);
-      --radius: 14px;
+      --secondary: #4f46e5;
+      --border: rgba(17,24,39,0.08);
+      --shadow: 0 12px 35px rgba(17,24,39,0.08);
+      --radius: 22px;
+      --max: 1180px;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
 
     body {
+      margin: 0;
       font-family: "Segoe UI", Arial, sans-serif;
-      background: linear-gradient(135deg, #f5e3c8, #f7e9d4);
       color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(255,111,97,0.14), transparent 24%),
+        radial-gradient(circle at top right, rgba(79,70,229,0.12), transparent 20%),
+        linear-gradient(135deg, #f3e4cc, #f8f3eb);
       min-height: 100vh;
+    }
+
+    a { color: inherit; }
+
+    .container {
+      max-width: var(--max);
+      margin: 0 auto;
       padding: 24px;
     }
 
-    .container {
-      max-width: 1100px;
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(12px);
+      background: rgba(255,255,255,0.72);
+      border-bottom: 1px solid rgba(17,24,39,0.06);
+    }
+
+    .nav-inner {
+      max-width: var(--max);
       margin: 0 auto;
-    }
-
-    header {
-      background: white;
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 36px 24px;
-      text-align: center;
-      margin-bottom: 32px;
-    }
-
-    h1 {
-      font-size: clamp(2rem, 4vw, 2.8rem);
-      margin-bottom: 10px;
-    }
-
-    .subtitle {
-      color: var(--muted);
-      font-size: 1.05rem;
-    }
-
-    .section {
-      margin-bottom: 36px;
-    }
-
-    .section-title {
-      font-size: 1.5rem;
-      margin-bottom: 18px;
-      padding-bottom: 10px;
-      border-bottom: 3px solid var(--primary);
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       gap: 18px;
     }
 
-    .card {
-      display: block;
+    .brand {
+      font-weight: 800;
       text-decoration: none;
-      color: inherit;
-      background: var(--card-bg);
+      letter-spacing: 0.2px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .nav-links a:hover { color: var(--primary); }
+
+    .hero {
+      padding-top: 36px;
+      display: grid;
+      grid-template-columns: 1.25fr 0.9fr;
+      gap: 26px;
+      align-items: stretch;
+    }
+
+    .hero-card, .panel, .timeline-item, .project-card, .contact-card {
+      background: var(--card);
+      border: 1px solid var(--border);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
-      padding: 22px 18px;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, border 0.2s ease;
-      border: 2px solid transparent;
     }
 
-    .card:hover {
-      transform: translateY(-4px);
-      border-color: var(--primary);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    .hero-card {
+      padding: 34px;
     }
 
-    .card-title {
-      font-size: 1.1rem;
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(79,70,229,0.08);
+      color: var(--secondary);
+      font-size: 0.85rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: clamp(2.3rem, 5vw, 4.1rem);
+      line-height: 1.04;
+    }
+
+    .hero p {
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 1.04rem;
+    }
+
+    .cta-row {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 22px;
+    }
+
+    .btn {
+      display: inline-block;
+      text-decoration: none;
+      border-radius: 14px;
+      padding: 13px 18px;
       font-weight: 700;
-      margin-bottom: 10px;
+      transition: transform 0.15s ease, background 0.2s ease, border-color 0.2s ease;
+      border: 1px solid transparent;
     }
 
-    .card-description {
+    .btn:hover { transform: translateY(-1px); }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .btn-primary:hover { background: var(--primary-hover); }
+
+    .btn-secondary {
+      background: #fff;
+      border-color: var(--border);
+      color: var(--text);
+    }
+
+    .hero-side {
+      display: grid;
+      gap: 18px;
+    }
+
+    .panel {
+      padding: 24px;
+      background: var(--card-strong);
+    }
+
+    .mini-title {
+      margin: 0 0 10px;
+      font-size: 1rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .big-text {
+      margin: 0;
+      font-size: 1.55rem;
+      font-weight: 800;
+      line-height: 1.3;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .stat {
+      background: #fafafa;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 18px;
+    }
+
+    .stat-value {
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+
+    .stat-label {
       color: var(--muted);
       line-height: 1.5;
       font-size: 0.92rem;
-      margin-bottom: 14px;
     }
 
-    .tag {
-      display: inline-block;
-      padding: 6px 12px;
+    section {
+      padding-top: 28px;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: 1.9rem;
+    }
+
+    .section-head p {
+      margin: 0;
+      color: var(--muted);
+      max-width: 700px;
+      line-height: 1.6;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .about-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .chip {
+      padding: 9px 12px;
       border-radius: 999px;
-      background: rgba(255, 111, 97, 0.12);
-      color: var(--primary);
-      font-size: 0.78rem;
+      background: #fff;
+      border: 1px solid var(--border);
+      color: #374151;
+      font-size: 0.92rem;
+      font-weight: 600;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 16px;
+    }
+
+    .timeline-item {
+      padding: 22px;
+    }
+
+    .timeline-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+
+    .timeline-role {
+      font-size: 1.14rem;
+      font-weight: 800;
+    }
+
+    .timeline-company {
+      color: var(--secondary);
       font-weight: 700;
+    }
+
+    .timeline-date {
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .timeline-item p {
+      color: var(--muted);
+      line-height: 1.65;
+      margin: 0;
+    }
+
+    .projects {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 18px;
+    }
+
+    .project-card {
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .project-tag {
+      display: inline-block;
+      width: fit-content;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(255,111,97,0.1);
+      color: var(--primary);
+      font-size: 0.8rem;
+      font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 0.4px;
     }
 
-    footer {
-      margin-top: 40px;
-      text-align: center;
-      color: var(--muted);
-      font-size: 0.95rem;
-      background: white;
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 24px 18px;
+    .project-card h3 {
+      margin: 0;
+      font-size: 1.15rem;
     }
 
-    @media (max-width: 600px) {
-      body {
-        padding: 12px;
-      }
+    .project-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.65;
+      flex-grow: 1;
+    }
 
-      header {
-        padding: 28px 16px;
-      }
+    .project-links {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 6px;
+    }
 
-      .card {
-        padding: 18px 14px;
+    .project-links a {
+      text-decoration: none;
+      font-weight: 700;
+      color: var(--secondary);
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 18px;
+    }
+
+    .contact-card {
+      padding: 22px;
+    }
+
+    .contact-label {
+      color: var(--muted);
+      font-size: 0.92rem;
+      margin-bottom: 8px;
+    }
+
+    .contact-value {
+      font-weight: 800;
+      font-size: 1.08rem;
+      word-break: break-word;
+    }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      padding: 34px 0 20px;
+    }
+
+    @media (max-width: 1024px) {
+      .hero, .about-grid, .projects, .contact-grid {
+        grid-template-columns: 1fr;
       }
+    }
+
+    @media (max-width: 640px) {
+      .container, .nav-inner { padding-left: 14px; padding-right: 14px; }
+      .hero-card, .panel, .about-card, .timeline-item, .project-card, .contact-card { padding: 18px; }
+      .stats { grid-template-columns: 1fr; }
+      .section-head { align-items: start; flex-direction: column; }
     }
   </style>
 </head>
 <body>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="#home">Pasquale Mangiafave</a>
+      <div class="nav-links">
+        <a href="#about">Chi sono</a>
+        <a href="#experience">Esperienza</a>
+        <a href="#projects">Progetti</a>
+        <a href="#contact">Contatti</a>
+      </div>
+    </div>
+  </nav>
+
   <div class="container">
-    <header>
-      <h1>🎯 Calcolatori finanziari</h1>
-      <p class="subtitle">Il mio primo sito pubblicato con GitHub Pages</p>
-    </header>
-
-    <section class="section">
-      <h2 class="section-title">📊 Pianificazione</h2>
-      <div class="grid">
-        <a class="card" href="#">
-          <div class="card-title">Calcolatore TFR</div>
-          <div class="card-description">
-            Prima pagina di esempio per confrontare rendimenti e rivalutazione.
+    <section class="hero" id="home">
+      <div class="hero-card">
+        <div class="badge">Data Analyst · Data Engineer</div>
+        <h1>Ciao, sono Pasquale.<br />Trasformo dati in processi, controlli e strumenti utili.</h1>
+        <p>
+          Lavoro tra analisi dati, quadrature, data quality e automazione di flussi in ambito bancario e assicurativo.
+          Mi occupo di SAS, SQL, Oracle, Databricks e reporting, con attenzione alla coerenza del dato e alla leggibilità delle soluzioni.
+        </p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="#projects">Vedi i progetti</a>
+          <a class="btn btn-secondary" href="#contact">Contattami</a>
+        </div>
+        <div class="stats">
+          <div class="stat">
+            <div class="stat-value">SAS · SQL · Databricks</div>
+            <div class="stat-label">Tecnologie su cui costruisco analisi, controlli e pipeline.</div>
           </div>
-          <span class="tag">Pianificazione</span>
-        </a>
-
-        <a class="card" href="#">
-          <div class="card-title">Calcolo pensione</div>
-          <div class="card-description">
-            Simulazione base per accantonamento e montante finale.
+          <div class="stat">
+            <div class="stat-value">Bancario / Assicurativo</div>
+            <div class="stat-label">Contesti in cui ho lavorato su data quality e reportistica.</div>
           </div>
-          <span class="tag">Pianificazione</span>
-        </a>
+        </div>
+      </div>
+
+      <div class="hero-side">
+        <div class="panel">
+          <p class="mini-title">Cosa faccio</p>
+          <p class="big-text">Analisi dati, quadrature, qualità del dato e sviluppo di strumenti utili per il business.</p>
+        </div>
+        <div class="panel">
+          <p class="mini-title">Obiettivo del sito</p>
+          <p class="big-text">Raccogliere profilo professionale, progetti, mini-tool e contatti in una sola pagina chiara.</p>
+        </div>
       </div>
     </section>
 
-    <section class="section">
-      <h2 class="section-title">💼 Investimenti</h2>
-      <div class="grid">
-        <a class="card" href="#">
-          <div class="card-title">Simulazione PAC</div>
-          <div class="card-description">
-            Una pagina dedicata alle simulazioni di accumulo nel tempo.
-          </div>
-          <span class="tag">Investimenti</span>
-        </a>
+    <section id="about">
+      <div class="section-head">
+        <div>
+          <h2>Chi sono</h2>
+          <p>Una breve presentazione personale e tecnica, pensata come portfolio e landing page professionale.</p>
+        </div>
+      </div>
 
-        <a class="card" href="#">
-          <div class="card-title">Safe Withdrawal Rate</div>
-          <div class="card-description">
-            Primo esempio di pagina per il calcolo del prelievo sostenibile.
+      <div class="about-grid">
+        <div class="about-card">
+          <h3>Profilo</h3>
+          <p>
+            Sono un professionista dei dati con esperienza in ambito data analysis e data engineering.
+            Ho lavorato su controlli di quadratura, migrazione di processi, estrazione dati per report e analisi di coerenza tra piattaforme diverse.
+          </p>
+          <p>
+            Mi interessa costruire soluzioni solide, leggibili e riutilizzabili: dalla query ben scritta alla piccola applicazione utile da pubblicare e mostrare.
+          </p>
+        </div>
+
+        <div class="about-card">
+          <h3>Competenze principali</h3>
+          <div class="chips">
+            <span class="chip">SAS Base</span>
+            <span class="chip">SQL</span>
+            <span class="chip">Oracle</span>
+            <span class="chip">Azure Databricks</span>
+            <span class="chip">Python</span>
+            <span class="chip">Power BI</span>
+            <span class="chip">Data Quality</span>
+            <span class="chip">Quadrature</span>
+            <span class="chip">Reporting</span>
+            <span class="chip">GitHub</span>
           </div>
-          <span class="tag">Investimenti</span>
-        </a>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience">
+      <div class="section-head">
+        <div>
+          <h2>Esperienza</h2>
+          <p>Una versione sintetica del percorso professionale, chiara e facilmente leggibile anche da recruiter o manager.</p>
+        </div>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-top">
+            <div>
+              <div class="timeline-role">Data Analyst</div>
+              <div class="timeline-company">Settore bancario / assicurativo</div>
+            </div>
+            <div class="timeline-date">Ruolo attuale</div>
+          </div>
+          <p>
+            Attività di quadratura e data quality tra piattaforme differenti, estrazione dati per reportistica,
+            analisi di coerenza e supporto ai flussi informativi in ambienti SAS, Oracle e Databricks.
+          </p>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-top">
+            <div>
+              <div class="timeline-role">Data Engineer</div>
+              <div class="timeline-company">Società finanziaria / credito al consumo</div>
+            </div>
+            <div class="timeline-date">Esperienza precedente</div>
+          </div>
+          <p>
+            Migrazione di programmi, riscrittura dei processi e presidio dell'integrità del dato per operazioni aziendali,
+            lavorando a stretto contatto con team tecnici e di delivery.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="section-head">
+        <div>
+          <h2>Progetti</h2>
+          <p>Qui puoi mostrare lavori reali, demo pubbliche, tool utili o repository che vuoi mettere in evidenza.</p>
+        </div>
+      </div>
+
+      <div class="projects">
+        <article class="project-card">
+          <span class="project-tag">Tool</span>
+          <h3>Calcolatori finanziari</h3>
+          <p>
+            Una raccolta di mini strumenti web per simulazioni PAC, rendimento atteso, obiettivi di risparmio e pianificazione finanziaria.
+          </p>
+          <div class="project-links">
+            <a href="#">Demo</a>
+            <a href="#">Codice</a>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <span class="project-tag">Data</span>
+          <h3>Dashboard e controlli di qualità</h3>
+          <p>
+            Esempi di analisi e controlli su flussi dati con attenzione alla coerenza tra sorgenti, stock e reportistica finale.
+          </p>
+          <div class="project-links">
+            <a href="#">Dettagli</a>
+            <a href="#">Repository</a>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <span class="project-tag">Learning</span>
+          <h3>Appunti tecnici e mini-guide</h3>
+          <p>
+            Una sezione dedicata a guide pratiche su SAS, SQL, Databricks, GitHub e workflow utili per il lavoro quotidiano.
+          </p>
+          <div class="project-links">
+            <a href="#">Leggi</a>
+            <a href="#">Materiale</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="section-head">
+        <div>
+          <h2>Contatti</h2>
+          <p>Qui puoi inserire i tuoi collegamenti professionali. Sostituisci i placeholder con i link reali.</p>
+        </div>
+      </div>
+
+      <div class="contact-grid">
+        <div class="contact-card">
+          <div class="contact-label">LinkedIn</div>
+          <div class="contact-value">inserisci-il-tuo-link-linkedin</div>
+        </div>
+        <div class="contact-card">
+          <div class="contact-label">GitHub</div>
+          <div class="contact-value">github.com/pasman88</div>
+        </div>
+        <div class="contact-card">
+          <div class="contact-label">Email</div>
+          <div class="contact-value">inserisci-la-tua-email</div>
+        </div>
       </div>
     </section>
 
     <footer>
-      <p>Sito in costruzione. Prossimo passo: aggiungere pagine vere e collegarle alla home.</p>
+      © 2026 Pasquale Mangiafave · Portfolio personale su GitHub Pages
     </footer>
   </div>
 </body>
