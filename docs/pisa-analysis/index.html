@@ -1,1 +1,244 @@
+<!DOCTYPE html>
+<html lang="it">
 
+<head>
+
+<meta charset="UTF-8">
+<title>PISA 2018 Analysis Guide</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+
+<script>hljs.highlightAll();</script>
+
+<style>
+
+body{
+margin:0;
+font-family: system-ui, Arial;
+display:flex;
+background:#ffffff;
+}
+
+.sidebar{
+width:260px;
+background:#0f172a;
+color:white;
+height:100vh;
+padding:25px;
+position:fixed;
+overflow:auto;
+}
+
+.sidebar h2{
+color:white;
+margin-bottom:20px;
+}
+
+.sidebar a{
+display:block;
+color:#cbd5e1;
+text-decoration:none;
+padding:8px 0;
+}
+
+.sidebar a:hover{
+color:white;
+}
+
+.content{
+margin-left:260px;
+padding:40px;
+max-width:900px;
+}
+
+pre{
+padding:16px;
+border-radius:6px;
+background:#f6f8fa;
+}
+
+code{
+font-size:14px;
+}
+
+.section{
+margin-bottom:60px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="sidebar">
+
+<h2>PISA R Guide</h2>
+
+<a href="#intro">Introduzione</a>
+<a href="#install">Installazione</a>
+<a href="#manual">Analisi manuale</a>
+<a href="#edsurvey">Metodo EdSurvey</a>
+<a href="#workflow">Workflow</a>
+<a href="#references">Riferimenti</a>
+
+</div>
+
+<div class="content">
+
+<div class="section" id="intro">
+
+<h1>Analisi dei dati PISA 2018 con R</h1>
+
+<p>
+Questa guida descrive come analizzare i dati PISA utilizzando R.
+</p>
+
+<p>
+Sono presentati due approcci:
+</p>
+
+<ul>
+<li>Implementazione manuale completa</li>
+<li>Utilizzo del pacchetto EdSurvey</li>
+</ul>
+
+</div>
+
+<div class="section" id="install">
+
+<h2>Installazione librerie</h2>
+
+<pre><code class="language-r">
+
+install.packages("tidyverse")
+install.packages("lme4")
+install.packages("survey")
+install.packages("mitools")
+install.packages("EdSurvey")
+
+library(tidyverse)
+library(lme4)
+library(survey)
+library(mitools)
+library(EdSurvey)
+
+</code></pre>
+
+</div>
+
+<div class="section" id="manual">
+
+<h2>Analisi manuale (PV + BRR + Rubin)</h2>
+
+<p>
+Questo approccio implementa completamente la metodologia PISA.
+</p>
+
+<pre><code class="language-r">
+
+student <- read.csv("CY07_MSU_STU_QQQ.csv")
+school  <- read.csv("CY07_MSU_SCH_QQQ.csv")
+
+data <- student %>%
+left_join(school, by=c("CNT","CNTSCHID"))
+
+</code></pre>
+
+<pre><code class="language-r">
+
+estimate_model <- function(data,outcome){
+
+formula_model <- as.formula(
+paste(outcome,
+"~ ESCS + ST004D01T + IMMIG +
+(1|CNTSCHID) + (1|CNT)")
+)
+
+model <- lmer(formula_model,data=data)
+
+fixef(model)
+
+}
+
+</code></pre>
+
+</div>
+
+<div class="section" id="edsurvey">
+
+<h2>Analisi con EdSurvey</h2>
+
+<p>
+Il pacchetto EdSurvey automatizza:
+</p>
+
+<ul>
+<li>Plausible Values</li>
+<li>replicate weights</li>
+<li>regole di Rubin</li>
+</ul>
+
+<pre><code class="language-r">
+
+pisa <- readPISA(
+path="PISA2018/",
+database="INT"
+)
+
+model <- lm.sdf(
+PVFLIT ~ ESCS + ST004D01T + IMMIG,
+data=pisa
+)
+
+summary(model)
+
+</code></pre>
+
+</div>
+
+<div class="section" id="workflow">
+
+<h2>Workflow dell'analisi</h2>
+
+<pre>
+
+Dataset PISA
+      ↓
+Plausible Values
+      ↓
+Replicate weights
+      ↓
+Stima modello
+      ↓
+Regole di Rubin
+      ↓
+Risultati finali
+
+</pre>
+
+</div>
+
+<div class="section" id="references">
+
+<h2>Riferimenti</h2>
+
+<ul>
+
+<li>PISA Technical Report</li>
+
+<li>EdSurvey Documentation</li>
+
+<li>OECD Guidelines for Plausible Values</li>
+
+</ul>
+
+</div>
+
+</div>
+
+</body>
+</html>
