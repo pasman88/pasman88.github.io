@@ -1,300 +1,481 @@
 <!DOCTYPE html>
 <html lang="it">
-
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
 <title>PISA 2018 R Analysis Guide</title>
 
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
-
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
 <script>hljs.highlightAll();</script>
 
 <style>
+  :root {
+    --sidebar-w: 260px;
+    --header-h: 60px;
+    --bg: #f8fafc;
+    --card: #ffffff;
+    --text: #1f2937;
+    --muted: #6b7280;
+    --border: #e5e7eb;
+    --primary: #ff6f61;
+    --secondary: #4f46e5;
+    --sidebar-bg: #0f172a;
+  }
 
-body{
-margin:0;
-font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial;
-display:flex;
-background:#f8fafc;
-color:#1f2937;
-}
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
 
-/* HEADER */
+  body {
+    margin: 0;
+    font-family: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    display: flex;
+  }
 
-.header{
-position:fixed;
-top:0;
-left:0;
-right:0;
-height:60px;
-background:white;
-border-bottom:1px solid #e5e7eb;
-display:flex;
-align-items:center;
-padding:0 24px;
-z-index:1000;
-font-weight:600;
-}
+  /* ── HEADER ── */
+  .header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: var(--header-h);
+    background: white;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    padding: 0 24px;
+    z-index: 1000;
+    gap: 10px;
+  }
+  .header-title {
+    font-weight: 700;
+    font-size: 0.97rem;
+    color: var(--text);
+  }
+  .header-sep {
+    color: var(--border);
+    font-size: 1.1rem;
+  }
+  .header-sub {
+    color: var(--muted);
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+  .header-badge {
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    background: rgba(79,70,229,0.08);
+    color: var(--secondary);
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
 
-.header span{
-color:#6b7280;
-margin-left:8px;
-}
+  /* ── SIDEBAR ── */
+  .sidebar {
+    width: var(--sidebar-w);
+    background: var(--sidebar-bg);
+    color: white;
+    height: 100vh;
+    position: fixed;
+    top: var(--header-h);
+    left: 0;
+    padding: 28px 20px 40px;
+    overflow-y: auto;
+    flex-shrink: 0;
+  }
+  .sidebar h2 {
+    margin: 0 0 6px;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #64748b;
+    font-weight: 700;
+  }
+  .sidebar hr {
+    border: none;
+    border-top: 1px solid #1e293b;
+    margin: 10px 0 18px;
+  }
+  .sidebar a {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    color: #94a3b8;
+    text-decoration: none;
+    padding: 8px 10px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: background 0.15s, color 0.15s;
+    margin-bottom: 2px;
+  }
+  .sidebar a:hover { color: white; background: rgba(255,255,255,0.06); }
+  .sidebar a.active { color: white; background: rgba(255,111,97,0.15); }
+  .sidebar a .num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 20px; height: 20px; border-radius: 6px;
+    background: rgba(255,255,255,0.07);
+    font-size: 0.72rem; font-weight: 700; flex-shrink: 0;
+    color: #64748b;
+  }
+  .sidebar a.active .num { background: rgba(255,111,97,0.25); color: var(--primary); }
 
-/* SIDEBAR */
+  .sidebar-back {
+    margin-top: 28px;
+    padding-top: 20px;
+    border-top: 1px solid #1e293b;
+  }
+  .sidebar-back a {
+    color: #64748b;
+    font-size: 0.85rem;
+  }
+  .sidebar-back a:hover { color: #94a3b8; background: none; }
 
-.sidebar{
-width:260px;
-background:#0f172a;
-color:white;
-height:100vh;
-position:fixed;
-top:60px;
-left:0;
-padding:30px 22px;
-overflow-y:auto;
-}
+  /* ── CONTENT ── */
+  .content {
+    margin-left: var(--sidebar-w);
+    padding: calc(var(--header-h) + 40px) 52px 60px 52px;
+    max-width: calc(var(--sidebar-w) + 820px);
+    width: 100%;
+    min-width: 0;
+  }
 
-.sidebar h2{
-margin-top:0;
-font-size:1.1rem;
-}
+  /* ── TYPOGRAPHY ── */
+  h1 {
+    font-family: "DM Serif Display", Georgia, serif;
+    font-size: 2.1rem;
+    font-weight: 400;
+    margin: 0 0 6px;
+    color: #111827;
+    line-height: 1.25;
+  }
+  .intro-meta {
+    color: var(--muted);
+    font-size: 0.92rem;
+    margin-bottom: 24px;
+    font-weight: 500;
+  }
+  h2 {
+    font-family: "DM Serif Display", Georgia, serif;
+    font-size: 1.45rem;
+    font-weight: 400;
+    margin: 48px 0 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+    color: #111827;
+  }
+  p { line-height: 1.72; color: #374151; font-size: 0.97rem; margin: 0 0 14px; }
+  ul { padding-left: 20px; }
+  li { line-height: 1.8; color: #374151; font-size: 0.97rem; margin-bottom: 4px; }
 
-.sidebar a{
-display:block;
-color:#cbd5e1;
-text-decoration:none;
-margin:12px 0;
-font-size:0.95rem;
-}
+  /* ── CODE ── */
+  pre {
+    background: #f6f8fa;
+    padding: 20px 22px;
+    border-radius: 10px;
+    overflow-x: auto;
+    font-size: 0.88rem;
+    border: 1px solid var(--border);
+    margin: 16px 0 24px;
+    font-family: "JetBrains Mono", "Fira Mono", monospace;
+    line-height: 1.65;
+  }
+  code { font-family: "JetBrains Mono", "Fira Mono", monospace; font-size: 0.88rem; }
+  p code, li code {
+    background: #f1f5f9;
+    padding: 2px 6px;
+    border-radius: 5px;
+    border: 1px solid #e2e8f0;
+    font-size: 0.85em;
+    color: var(--secondary);
+  }
 
-.sidebar a:hover{
-color:white;
-}
+  /* ── CALLOUT ── */
+  .callout {
+    background: rgba(79,70,229,0.05);
+    border: 1px solid rgba(79,70,229,0.15);
+    border-left: 3px solid var(--secondary);
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin: 18px 0;
+    font-size: 0.93rem;
+    color: #374151;
+    line-height: 1.65;
+  }
+  .callout strong { color: var(--secondary); }
 
-/* CONTENT */
+  /* ── SECTION DIVIDER ── */
+  .section-divider {
+    margin: 44px 0 0;
+    border: none;
+    border-top: 1px solid var(--border);
+  }
 
-.content{
-margin-left:260px;
-padding:100px 40px 40px 40px;
-max-width:900px;
-}
+  /* ── STEP BADGE ── */
+  .step {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+    padding: 5px 12px;
+    background: rgba(255,111,97,0.08);
+    border: 1px solid rgba(255,111,97,0.18);
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+  }
 
-/* TYPOGRAPHY */
+  /* ── REFERENCES ── */
+  .ref-list { list-style: none; padding: 0; }
+  .ref-list li {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 12px 16px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 8px;
+    font-size: 0.93rem;
+    color: #374151;
+  }
+  .ref-list li::before {
+    content: "📄";
+    font-size: 1rem;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
 
-h1{
-font-size:2rem;
-margin-top:0;
-}
+  footer {
+    margin-top: 56px;
+    padding-top: 22px;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 0.85rem;
+    text-align: center;
+  }
 
-h2{
-margin-top:40px;
-border-bottom:1px solid #e5e7eb;
-padding-bottom:6px;
-}
-
-p{
-line-height:1.6;
-}
-
-/* CODE */
-
-pre{
-background:#f6f8fa;
-padding:18px;
-border-radius:8px;
-overflow-x:auto;
-font-size:0.9rem;
-border:1px solid #e5e7eb;
-}
-
-hr{
-margin:40px 0;
-border:none;
-border-top:1px solid #e5e7eb;
-}
-
-/* RESPONSIVE */
-
-@media (max-width:900px){
-
-.sidebar{
-display:none;
-}
-
-.content{
-margin-left:0;
-padding:100px 20px;
-}
-
-}
-
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .sidebar { display: none; }
+    .content { margin-left: 0; padding: calc(var(--header-h) + 24px) 24px 40px; max-width: 100%; }
+    .header-badge { display: none; }
+  }
+  @media (max-width: 600px) {
+    h1 { font-size: 1.6rem; }
+    .content { padding-left: 16px; padding-right: 16px; }
+    pre { padding: 14px; font-size: 0.82rem; }
+  }
 </style>
-
 </head>
-
 <body>
 
+<!-- HEADER -->
 <div class="header">
-
-PISA 2018 R Analysis Guide
-<span>Analisi dei dati OCSE PISA</span>
-
+  <span class="header-title">PISA 2018 R Analysis Guide</span>
+  <span class="header-sep">·</span>
+  <span class="header-sub">Analisi dei dati OCSE PISA</span>
+  <span class="header-badge">R · EdSurvey</span>
 </div>
 
+<!-- SIDEBAR -->
 <div class="sidebar">
+  <h2>Indice</h2>
+  <hr>
+  <a href="#intro" class="active">
+    <span class="num">↗</span> Introduzione
+  </a>
+  <a href="#manual">
+    <span class="num">1</span> Analisi manuale
+  </a>
+  <a href="#advanced">
+    <span class="num">2</span> Analisi avanzata
+  </a>
+  <a href="#edsurvey">
+    <span class="num">3</span> Metodo EdSurvey
+  </a>
+  <a href="#references">
+    <span class="num">→</span> Riferimenti
+  </a>
 
-<h2>Indice</h2>
-
-<a href="#intro">Introduzione</a>
-<a href="#manual">Analisi manuale</a>
-<a href="#advanced">Analisi avanzata</a>
-<a href="#edsurvey">Metodo EdSurvey</a>
-<a href="#references">Riferimenti</a>
-
+  <div class="sidebar-back">
+    <a href="../index.html">← Torna al portfolio</a>
+  </div>
 </div>
 
+<!-- CONTENT -->
 <div class="content">
 
-<h1 id="intro">Analisi dei dati PISA 2018 con R</h1>
+  <h1 id="intro">Analisi dei dati PISA 2018 con R</h1>
+  <p class="intro-meta">Guida pratica · OCSE PISA · Plausible Values · Replicate Weights · EdSurvey</p>
 
-<p>
-Questa guida mostra come analizzare i dati dell'indagine
-OCSE PISA utilizzando R.
-</p>
+  <p>
+    Questa guida mostra come analizzare correttamente i dati dell'indagine OCSE PISA utilizzando R,
+    rispettando le indicazioni metodologiche ufficiali per la stima di medie, regressioni e modelli
+    multilivello su dati complessi con design campionario a più stadi.
+  </p>
 
-<p>
-Sono presentati tre approcci:
-</p>
+  <div class="callout">
+    <strong>Tre approcci a confronto:</strong> Analisi manuale con Plausible Values (regole di Rubin),
+    analisi avanzata con replicate weights BRR, e utilizzo del pacchetto <code>EdSurvey</code> che
+    automatizza entrambi i passaggi.
+  </div>
 
-<ul>
-<li>Analisi manuale con Plausible Values</li>
-<li>Analisi avanzata con replicate weights (BRR)</li>
-<li>Utilizzo del pacchetto EdSurvey</li>
-</ul>
+  <ul>
+    <li>Analisi manuale con Plausible Values</li>
+    <li>Analisi avanzata con replicate weights (BRR)</li>
+    <li>Utilizzo del pacchetto EdSurvey</li>
+  </ul>
 
-<hr>
+  <hr class="section-divider">
 
-<h2 id="manual">1 Analisi manuale (PV + Rubin)</h2>
+  <!-- SEZIONE 1 -->
+  <h2 id="manual">1 Analisi manuale (PV + Rubin)</h2>
 
-<pre><code class="language-r">
+  <div class="step">Passaggi principali</div>
 
-####################
-#### R ####
-####################
+  <ol>
+    <li>Import dati studenti e scuole</li>
+    <li>Preparazione e join del dataset</li>
+    <li>Definizione variabili di interesse</li>
+    <li>Loop sui 10 Plausible Values</li>
+    <li>Stima modello multilivello per ciascun PV</li>
+    <li>Salvataggio coefficienti</li>
+    <li>Combinazione con regole di Rubin</li>
+  </ol>
 
-1 Import dati
-2 Preparazione dataset
-3 Definizione variabili
-4 Loop sui Plausible Values
-5 Stima modello multilivello
-6 Salvataggio coefficienti
-7 Combinazione Rubin
-
-library(tidyverse)
+<pre><code class="language-r">library(tidyverse)
 library(lme4)
 
+# Import dati
 student <- read.csv("CY07_MSU_STU_QQQ.csv")
 school  <- read.csv("CY07_MSU_SCH_QQQ.csv")
 
+# Join studenti-scuole
 data <- student %>%
-left_join(school, by=c("CNT","CNTSCHID"))
-
+  left_join(school, by = c("CNT", "CNTSCHID"))
 </code></pre>
 
-<hr>
+  <hr class="section-divider">
 
-<h2 id="advanced">2 Analisi avanzata (PV + BRR)</h2>
+  <!-- SEZIONE 2 -->
+  <h2 id="advanced">2 Analisi avanzata (PV + BRR)</h2>
 
-<pre><code class="language-r">
+  <p>
+    Per stime corrette degli errori standard è necessario combinare il loop sui
+    10 Plausible Values con il loop sugli 80 replicate weights BRR. La varianza finale
+    tiene conto sia dell'incertezza campionaria che dell'imputazione multipla.
+  </p>
 
-############################
-#### R avanzato ####
-############################
+  <div class="callout">
+    <strong>Schema:</strong> dataset → loop PV (10) → loop BRR (80) → stima modello → varianza BRR → regole di Rubin
+  </div>
 
-dataset
-↓
-loop Plausible Values (10)
-↓
-loop BRR replicate weights (80)
-↓
-stima modello multilivello
-↓
-varianza campionaria BRR
-↓
-regole di Rubin
-
-rep_weights <- paste0("W_FSTR",1:80)
+<pre><code class="language-r">rep_weights <- paste0("W_FSTR", 1:80)
 
 pv_results <- list()
 
-for (pv in 1:10){
+for (pv in 1:10) {
 
-pv_name <- paste0("PV",pv,"FLIT")
+  pv_name  <- paste0("PV", pv, "FLIT")
+  coef_reps <- matrix(NA, nrow = 80)
 
-coef_reps <- matrix(NA,nrow=80)
+  for (r in 1:80) {
 
-for(r in 1:80){
+    weight_var <- rep_weights[r]
+    data_analysis$weight <- data_analysis[[weight_var]]
 
-weight_var <- rep_weights[r]
+    coef_reps[r, ] <- estimate_model(data_analysis, pv_name)
+  }
 
-data_analysis$weight <- data_analysis[[weight_var]]
+  # Varianza campionaria BRR
+  sampling_var <- (4 / 80) * colSums((coef_reps - colMeans(coef_reps))^2)
 
-coef_reps[r,] <- estimate_model(data_analysis,pv_name)
-
+  pv_results[[pv]] <- list(
+    coef = estimate_model(data_analysis, pv_name),
+    sampling_var = sampling_var
+  )
 }
 
-}
-
+# Combinazione Rubin
+final <- combine_rubin(pv_results)
 </code></pre>
 
-<hr>
+  <hr class="section-divider">
 
-<h2 id="edsurvey">3 Metodo EdSurvey</h2>
+  <!-- SEZIONE 3 -->
+  <h2 id="edsurvey">3 Metodo EdSurvey</h2>
 
-<p>
-Il pacchetto EdSurvey automatizza la gestione di Plausible
-Values e replicate weights nelle indagini educative come PISA.
-</p>
+  <p>
+    Il pacchetto <code>EdSurvey</code> automatizza la gestione di Plausible Values e
+    replicate weights nelle grandi indagini educative internazionali (PISA, TIMSS, PIRLS, ecc.),
+    riducendo drasticamente il codice necessario e minimizzando il rischio di errori metodologici.
+  </p>
 
-<pre><code class="language-r">
-
-install.packages("EdSurvey")
-
+<pre><code class="language-r">install.packages("EdSurvey")
 library(EdSurvey)
 
+# Lettura dati PISA 2018 (International)
 pisa <- readPISA(
-path="PISA2018/",
-database="INT"
+  path     = "PISA2018/",
+  database = "INT"
 )
 
+# Regressione con gestione automatica di PV e BRR
 model <- lm.sdf(
-PVFLIT ~ ESCS + ST004D01T + IMMIG,
-data=pisa
+  PVFLIT ~ ESCS + ST004D01T + IMMIG,
+  data = pisa
 )
 
 summary(model)
-
 </code></pre>
 
-<hr>
+  <div class="callout">
+    <strong>Vantaggi EdSurvey:</strong> gestione automatica dei PV, calcolo corretto degli errori standard BRR,
+    output compatibile con le linee guida OCSE. Consigliato per analisi di produzione.
+  </div>
 
-<h2 id="references">Riferimenti</h2>
+  <hr class="section-divider">
 
-<ul>
+  <!-- RIFERIMENTI -->
+  <h2 id="references">Riferimenti</h2>
 
-<li>OECD PISA Technical Report</li>
-<li>EdSurvey Documentation</li>
-<li>OECD Plausible Values Guidelines</li>
+  <ul class="ref-list">
+    <li>OECD (2020). PISA 2018 Technical Report. OECD Publishing, Paris.</li>
+    <li>Bailey, P. & Zhang, T. (2023). EdSurvey: A Package for Analyzing NCES Data. R package documentation.</li>
+    <li>OECD (2009). PISA Data Analysis Manual: SPSS and SAS (2nd ed.). OECD Publishing.</li>
+  </ul>
 
-</ul>
+  <footer>
+    © 2026 Pasquale Mangiafave · <a href="../index.html" style="color:inherit">Portfolio</a>
+  </footer>
 
 </div>
+
+<script>
+  // Active sidebar link on scroll
+  const sections = document.querySelectorAll('[id]');
+  const links = document.querySelectorAll('.sidebar a');
+
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        links.forEach(l => {
+          l.classList.toggle('active', l.getAttribute('href') === '#' + e.target.id);
+        });
+      }
+    });
+  }, { rootMargin: '-30% 0px -65% 0px' });
+
+  sections.forEach(s => obs.observe(s));
+</script>
 
 </body>
 </html>
